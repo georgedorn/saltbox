@@ -11,6 +11,7 @@
     verify(identifier, key, data) verifies record and returns True (verified) or False.
     update(identifier, key, data, new_data) updates record and returns digest iff data is verified.
     delete(identifier, key, data) deletes record and returns digest iff data is verified.
+    delete(identifier, key) deletes record and returns digest iff identifier is authorized. @todo
 """
 
 
@@ -52,11 +53,11 @@ class SaltboxInterface(object):
         raise NotImplementedError
 
 
-    def delete(cls, identifier, key, data):
+    def delete(cls, identifier, key, data=None):
         """
         Delete a saltbox record.
 
-        @return boolean True if data verifies against existing record and delete successful, False if no verify/no record.
+        @return boolean True iff (data != None and verifies, or data == None and identifier authorized to delete @todo )
         @raise SaltboxException
         """
         raise NotImplementedError
@@ -121,13 +122,13 @@ def build_saltbox(interface_klass, messenger_klass):
     """
     errors = []
     if not isinstance(interface_klass, SaltboxInterface):
-        errors[] = 'interface_klass must be a SaltboxInterface'
+        errors[] = 'interface_klass must inherit from SaltboxInterface'
     if not isinstance(messenger_klass, SaltboxMessenger):
         errors[] = 'messenger_klass must be a SaltboxMessenger'
 
     if errors:
         if len(errors) == 2:
-            error = errors[0] + 'and' + errors[1]
+            error = "%s and %s" % (errors[0], errors[1])
         else:
             error = errors[0]
         raise SaltboxException(error)
