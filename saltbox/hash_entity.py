@@ -13,7 +13,7 @@ from saltbox import SaltboxException
 
 class HashEntity(object):
     """
-    Represents a primary key (identifier) and an associated digest (aka hash,
+    Represents a primary key (owner? owner+key? @todo ????) and an associated digest (aka hash,
     which is a reserved word in Python).  Also stores data for convenience,
     though it's not ever saved.
 
@@ -27,6 +27,7 @@ class HashEntity(object):
 
     def __init__(self, key, data=None, digest=None, cryptcontext=None):
         if cryptcontext is None:
+            # @todo make the CryptContext schemes not hard-coded
             self.cryptcontext = CryptContext(schemes=['ldap_pbkdf2_sha512'],
                                              default='ldap_pbkdf2_sha512',
                                              all__vary_rounds=0.1)

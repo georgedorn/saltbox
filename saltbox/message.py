@@ -7,12 +7,12 @@
 """
 
 class SaltboxMessage(object):
-    identifier = None
+    owner = None
     nonce = None
     values = { }
 
-    def __init__(self, identifier, nonce, key=None, data=None, digest=None):
-        self.identifier = identifier
+    def __init__(self, owner, nonce, key=None, data=None, digest=None):
+        self.owner = owner
         self.nonce = nonce
         self.values['key'] = key
         self.values['data'] = data
